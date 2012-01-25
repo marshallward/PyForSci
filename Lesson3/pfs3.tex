@@ -1,0 +1,189 @@
+% Python for Scientists: Lesson 3
+% Author: Marshall Ward
+%=============================================================================%
+\documentclass[red]{beamer}
+
+% Font configuration
+\usepackage{pxfonts}
+%\usepackage{eulervm}
+%\usepackage{type1cm}
+%\usepackage{fourier}
+
+% Packages
+\usepackage{listings}
+
+\usepackage{color}
+\definecolor{ltblue}{rgb}{0.9, 0.9, 1.0}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\usepackage{hyperref}
+
+% Directory Structure
+\graphicspath{{figures/}}
+
+% Beamer configuration
+\usetheme{Frankfurt}
+%-----------------------------------------------------------------------------%
+\AtBeginSection[]
+{
+   \begin{frame}
+        \frametitle{Outline}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+%-----------------------------------------------------------------------------%
+\title{Python for Scientists: Matplotlib}
+%=============================================================================%
+\begin{document}
+% Listings settings
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily,
+    showspaces=false,
+    showstringspaces=false,
+    backgroundcolor=\color{ltblue},
+    numberstyle=\tiny\color{gray},        % line number style
+    keywordstyle=\color{blue},          % keyword style
+    commentstyle=\color{dkgreen},       % comment style
+    stringstyle=\color{mauve}         % string literal style
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}
+    \titlepage
+\end{frame}
+%=============================================================================%
+\section[Intro]{What is Matplotlib?}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{What is Matplotlib?}
+    
+    \begin{itemize}
+        \item Matplotlib is a rendering API for 2D (and limited 3D) plotting
+        \item \lstinline|matplotlib.pyplot| is a streamlined Matlab-like interface to Matplotlib
+        \item \lstinline|pylab| is a bundle of NumPy, SciPy and Matplotlib.\\
+        One often sees it invoked like this:
+        \begin{lstlisting}
+from pylab import *
+        \end{lstlisting}
+    \end{itemize}
+\end{frame}
+%=============================================================================%
+\section{2D Curve Plots}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{My First Plot}
+
+    Plot $\sin x$ from $-2\pi$ to $2\pi$:
+    \lstinputlisting{scripts/sine_plot.py}
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Saving your Figure}
+
+    Append this to the end of your script:
+    \begin{lstlisting}
+plt.savefig('myplot.pdf')
+    \end{lstlisting}
+    It usually figures out the file type from the extension.
+    \\~\\
+    To remove space around the plot, use:
+    \begin{lstlisting}
+plt.savefig('myplot.pdf', bbox_inches='tight')
+    \end{lstlisting}
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Multiple Plots}
+
+    Plot three sine curves with different phase shifts:
+    $y_n = \sin(x + \phi_n)$
+    \\~\\
+    Call \lstinline|plot()| three times, then \lstinline|show()| the results
+    \onslide<2->{
+    \lstinputlisting{scripts/three_phase_plot.py}
+    }
+}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Dots and Dashes}
+
+    Stylise curves with dashes, shapes, and colours (like Matlab):
+
+    \onslide<2->{
+    \lstinputlisting{scripts/pretty_three_phase.py}
+    }
+}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Axis Labels}
+
+    Labeling axes is similar to Matlab:
+    \lstinputlisting{scripts/labels.py}
+}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Legends}
+
+    Include a legend in your plot
+    \lstinputlisting{scripts/legend.py}
+}
+%=============================================================================%
+\section{2D Field Plots}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Contour Plots}
+
+    Plot contours on range $[-2,2]\times[-2,2]$ for the function:
+    \[ z(x, y) = \left(x - \frac{1}{2}\right) e^{-(x^2 + y^2)} \]
+
+    \lstinputlisting{scripts/contour_plot.py}
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Image Plots}
+
+    \lstinline|imshow| plots pixel fields (\lstinline|pcolor| is very slow)
+    \lstinputlisting{scripts/image_plot.py}
+\end{frame}
+%=============================================================================%
+\section{Object-Oriented Matplotlib}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Object-Oriented Matplotlib}
+    As your plots become more complex, you may need to start using object-oriented matplotlib
+    \lstinputlisting{scripts/oo_plot.py}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Subplots}
+
+    Put two plots on the same figure:
+    \lstinputlisting{scripts/subplots.py}
+}
+%=============================================================================%
+\section{Basemap}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Basemap: Earth Grid Plotting}
+
+    Basemap provides tools for plotting on several geographic grids.
+}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Orthographic Grids}
+
+    \lstinputlisting{scripts/ortho_basemap.py}
+}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Mercator Grids}
+
+    \lstinputlisting{scripts/merc_basemap.py}
+}
+%=============================================================================%
+%-----------------------------------------------------------------------------%
+%=============================================================================%
+\end{document}

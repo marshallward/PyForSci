@@ -1,0 +1,680 @@
+% Python for Scientists: Lesson 1
+% Author: Marshall Ward
+%=============================================================================%
+\documentclass[red]{beamer}
+
+% Font configuration
+\usepackage{pxfonts}
+%\usepackage{eulervm}
+%\usepackage{type1cm}
+%\usepackage{fourier}
+
+% Packages
+\usepackage{listings}
+
+\usepackage{color}
+\definecolor{ltblue}{rgb}{0.9, 0.9, 1.0}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+% Beamer configuration
+\usetheme{Frankfurt}
+%-----------------------------------------------------------------------------%
+\AtBeginSection[]
+{
+   \begin{frame}
+        \frametitle{Outline}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+%-----------------------------------------------------------------------------%
+\title{Python for Scientists: Basics}
+%=============================================================================%
+\begin{document}
+% Listings settings
+\lstset{
+    language=Python,
+    basicstyle=\ttfamily,
+    showspaces=false,
+    showstringspaces=false,
+    backgroundcolor=\color{ltblue},
+    numberstyle=\tiny\color{gray},        % line number style
+    keywordstyle=\color{blue},          % keyword style
+    commentstyle=\color{dkgreen},       % comment style
+    stringstyle=\color{mauve}         % string literal style
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}
+    \titlepage
+\end{frame}
+%=============================================================================%
+\section[Basics]{Basic Python}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Starting up Python}
+
+    Open a terminal and type the following:
+    
+    \begin{block}{}
+    \lstinline|$ python|
+    \end{block}
+
+    This is the \textit{interactive shell}.
+    
+    \begin{itemize}
+        \item What version of Python are you running?
+        \item Quit the shell by typing Control-D (EOF)
+    \end{itemize}
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Integers and Floating Point Numbers}
+    
+    Python distinguishes between integers and floating point:
+    \begin{itemize}
+        \item \lstinline|>>> 1 + 2 - 3 * 4 / 5|\\
+            \onslide<2->{\lstinline|1|}
+        \item \lstinline|>>> 1.+ 2.* 3./ 4.- 5.| \\
+            \onslide<2->{\lstinline|0.6000000000000001|}
+    \end{itemize}
+    
+    \onslide<2->{Watch your decimal points!}
+    \\~\\
+    \onslide<2->{\small Note: \lstinline|4 / 5 = 0.8| in Python 3.x}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{New Syntax}
+    
+    \begin{itemize}
+        \item Exponents: \lstinline|>>> 3**4| \\
+            \onslide<2->{\lstinline|81|}
+        \item Complex numbers: \lstinline|>>> (1+2j)*(2+3J)| \\
+            \onslide<2->{\lstinline|(-4+7j)|}
+        \item Last output: \lstinline|>>> _ + 1| \\
+            \onslide<2->{\lstinline|(-3+7j)|}
+        \item Truncated division: \lstinline|7.// 4.| \\
+            \onslide<2->{\lstinline|1.0|}
+    \end{itemize}
+\end{frame}
+%----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Logical Operators}
+
+    Python has the usual logical operators:
+    \begin{itemize}
+        \item \lstinline|>>> 1 < 2|\\
+            \onslide<2->{\lstinline|True|}
+        \item \lstinline|>>> 3 >= 2|\\
+            \onslide<2->{\lstinline|False|}
+        \item \lstinline|>>> 5 > 4 and 2 == 3|\\
+            \onslide<2->{\lstinline|False|}
+        \item \lstinline|>>> 1 < 2 < 3|\\
+            \onslide<2->{\lstinline|True|}
+    \end{itemize}
+    
+    \begin{block}
+    \onslide<2->{
+        \lstinline|1 < 2 < 3| is shorthand: \lstinline|1 < 2 and 2 < 3|
+        \\~\\
+        Try \lstinline|1 < 2 == 2| and \lstinline|(1 < 2) == 2|.
+    }
+    \end{block}
+\end{frame}
+%----------------------------------------------------------------------------%
+\frame{    
+    \frametitle{Modular Arithmetic}
+    
+    Modular arithmetic is not quite like C and Fortran:
+    \begin{columns}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item \lstinline|>>> 7 // 4|\\
+                \onslide<2->{\lstinline|1|}
+            \item \lstinline|>>> 7 \% 4|\\
+                \onslide<2->{\lstinline|3|}
+        \end{itemize}
+        \column{0.5\textwidth}
+        \begin{itemize}
+            \item \lstinline|>>> -7 // 4|\\
+                \onslide<2->{\lstinline|-2|}
+            \item \lstinline|>>> -7 \% 4|\\
+                \onslide<2->{\lstinline|1|}
+        \end{itemize}
+    \end{columns}
+    
+    \vspace{10pt}
+    \onslide<3>{
+        \begin{block}{}
+        For \lstinline|q = x / N| and \lstinline|r = x \% N|, Python solves
+            \[ x = q N + r\]
+        so that $0 \leq r < N$ for $N>0$.
+        \end{block}
+    }
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Variables}
+    
+    Create variables at any time (\textit{dynamic typing}):
+    \begin{lstlisting}
+x = 123.
+y = 456.
+z = x + y
+x = 'Now x is a string.'
+z = x + y # ???
+    \end{lstlisting}
+
+    Assigning several variables:
+    \begin{lstlisting}
+x = y = z = 1
+    \end{lstlisting}
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{\texttt{math} and Modules}
+    
+    \textit{Modules} let you import external functions, variables, etc.
+    \\~\\
+    \texttt{math} provides standard mathematics functions.
+
+    Import the \texttt{math} module and try some functions:
+    \begin{lstlisting}
+import math
+x = math.pi
+y = math.sin(x/2.)
+    \end{lstlisting}
+
+    (Note: \texttt{numpy} provides most of the same functions.)
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Import syntax}
+
+    You can rename module imports
+    \begin{lstlisting}
+import math as m
+x = m.pi
+y = m.sin(x/2.)
+    \end{lstlisting}
+
+    or import specific functions:
+    \begin{lstlisting}
+from math import pi
+    \end{lstlisting}
+
+    or the entire contents (not recommended though):
+    \begin{lstlisting}
+from math import *
+    \end{lstlisting}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Basic I/O}
+    
+    Basic statement printing ('echo'):
+    \begin{lstlisting}
+>>> print 'Hello Python.'
+Hello Python.
+    \end{lstlisting}
+
+    Commas separate quantities by spaces:
+    \begin{lstlisting}
+>>> x = 1
+>>> y = 2
+>>> print 'x =', x, 'and y =', y
+x = 1 and y = 2
+    \end{lstlisting}
+\end{frame}
+%=============================================================================%
+\section[Scripts]{Scripting}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Running Python Scripts}
+
+    Create a file named \texttt{hello.py} containing the following:
+
+    \begin{lstlisting}
+print "This is my first Python script."
+name = raw_input("Type your name: ")
+print "Hello", name
+print "Goodbye."
+    \end{lstlisting}
+
+    Now run the script by typing the following:
+    \begin{block}{}
+        \texttt{\$ python hello.py}
+    \end{block}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Self-executing scripts}
+
+    Put the following as your first line in the script:
+    \begin{lstlisting}
+#!/usr/bin/env python
+    \end{lstlisting}
+
+    Then make the script executable by typing in the terminal:
+    \begin{block}{}
+        \texttt{\$ chmod +x hello.py}
+    \end{block}
+
+    Now you can run the script as an executable:
+    \begin{block}{}
+        \texttt{./hello.py}
+    \end{block}
+\end{frame}
+%=============================================================================%
+\section[Lists]{Lists and Indexing}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Lists}
+    
+    Lists are sequences of data
+    \begin{lstlisting}
+x = [0, 1, 2, 2]
+y = [4, 4.0, 'four']
+z = [x, y, 1, [2,3] ]
+    \end{lstlisting}
+    Lists can contain anything, even other lists.
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{List Indexing}
+
+    Indexing begins at zero, denoted by \texttt{[]}:
+    \begin{lstlisting}
+>>> x = [1,2,3,4,5]
+>>> x[0]
+1
+>>> x[4]
+5
+    \end{lstlisting}
+
+    \lstinline!range(N)! will generate an 'index list' of size $N$:
+    \begin{lstlisting}
+range(10)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    \end{lstlisting}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}
+    \frametitle{Slicing}
+
+    \texttt{x[m:n]} outputs a segment from $m \leq i < n$.
+    \\~\\    
+    For \texttt{x = range(8)}, try the following:
+    \begin{itemize}
+        \item \texttt{x[3:6]}\\
+            \onslide<2->{\texttt{[3, 4, 5]}}
+        \item \texttt{x[:6]}\\
+            \onslide<2->{\texttt{[0, 1, 2, 3, 4, 5]}}
+        \item \texttt{x[3:]}\\
+            \onslide<2->{\texttt{[3, 4, 5, 6, 7]}}
+        \item \texttt{x[:]}\\
+            \onslide<2->{\texttt{[0, 1, 2, 3, 4, 5, 6, 7]}}
+    \end{itemize}
+    When omitted, \texttt{m = 0} and \texttt{n = len(x)}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Striding}
+
+    A second colon denotes stride, e.g. \lstinline|x[m:n:k]|
+
+    \lstinline|x[::3]| returns every third element
+
+    \begin{lstlisting}
+>>> x = range(10)
+>>> x[::2]
+[0, 2, 4, 6, 8]
+>>> x[2::3]
+[2, 5, 8]
+>>> x[::-1]     # Reverse stride
+[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    \end{lstlisting}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Inverse index}
+
+    Python supports \textit{negative indexing}:
+    \\~\\
+    \lstinline|x = range(8)|
+    \begin{itemize}
+        \item \lstinline|x[-1]| \\
+            \onslide<2->{\lstinline|[7]|}
+        \item \lstinline|x[:-3]| \\
+            \onslide<2->{\lstinline|[0, 1, 2, 3, 4]|}
+        \item \lstinline|x[2:-2]| \\
+            \onslide<2->{\lstinline|[2, 3, 4, 5]|}
+    \end{itemize}
+
+    \begin{block}{}
+        \lstinline|x[-k]| is just shorthand for \lstinline|x[N-k]|.
+    \end{block}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Index Quiz}
+
+    Write a script that reads a number $N$ using this command:
+    \lstinline|N = int(raw_input('Enter N: '))|
+    \\~\\
+    Create a list using \lstinline|range(N)| and print the following:
+    \begin{itemize}
+        \item The entire list
+        \item The reversed list
+        \item The first six elements
+        \item The last three
+        \item Everything but the last three
+        \item Every third element between the first four and last four
+        \item The first half of the list
+        \item the last five elements, reversed
+    \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{Index Solution}
+
+    One solution, at least.
+    \lstinputlisting{scripts/index_quiz.py}
+}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Tuples}
+
+    Tuples are like lists, except they cannot be modified:
+    \begin{lstlisting}
+>>> x = tuple([1,2,3])
+>>> x
+(1, 2, 3)
+>>> x[0] = 5
+    \end{lstlisting}
+    A favorite swap trick:
+    \begin{lstlisting}
+>>> x = 1
+>>> y = 2
+>>> x, y = y, x
+    \end{lstlisting}
+    Parentheses are often implicit.
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Dicts}
+
+    Dicts are mappings:
+    \begin{lstlisting}
+>>> d = {'one': 1, 'two': 2, 'three': 3}
+>>> d['one']
+1
+    \end{lstlisting}
+    Like lists, with generic indexing
+    \\~\\
+    Fun way to create a dict:
+    \begin{lstlisting}
+>>> x = ['one', 'two', 'three']
+>>> y = [1, 2, 3]
+>>> zip(x, y)
+[('one', 1), ('two', 2), ('three', 3)]
+>>> d = dict( zip(x,y) )
+    \end{lstlisting}
+\end{frame}
+%=============================================================================%
+\section[Flow Control]{Basic Flow Control}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{\texttt{if-elif-else} control}
+
+    Python flow control is minimal:
+    \begin{lstlisting}
+x = 1
+if x > 0:
+    print "x is positive"
+elif x < 0:
+    print "x is negative"
+else:
+    print "x is zero"
+    \end{lstlisting}
+
+    Notice:
+    \begin{itemize}
+        \item Conditionals end with \lstinline|:|
+        \item There is no \texttt{endif}, closing bracket, etc.
+        \item Indentation is \textit{mandatory}!
+    \end{itemize}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{\texttt{while} loops}
+    
+    Python has a \lstinline|while| loop:
+    \begin{lstlisting}
+x = 0
+while x < 10:
+    print x
+    x += 1
+    \end{lstlisting}
+    but in practice they are rarely used.
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{\texttt{for} loops}
+    
+    The most common Python loop:
+    \begin{lstlisting}
+for i in range(10):
+    print i
+    \end{lstlisting}
+
+    In Python, you \textit{iterate} through the list:
+    \begin{lstlisting}
+x = [1, 3, 7, 'apple', 'banana']
+for i in x:
+    print i
+    \end{lstlisting}
+    Iterating through elements is preferred (and usually fastest).
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{List Comprehensions}
+
+    \textit{List comprehensions} are rapid methods for list generation:
+    \\~\\
+    Create a list of even numbers:
+    \begin{lstlisting}
+x = [i for i in range(10) if i%2 == 0]
+    \end{lstlisting}
+
+    Create a list of squared numbers:
+    \begin{lstlisting}
+y = [i**2 for i in range(10)]
+    \end{lstlisting}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Functions}
+
+    Minimal quadratic function:
+    \begin{lstlisting}
+def square(x):
+    return x*x
+    \end{lstlisting}
+
+    Anything can be a function argument, even other functions:
+    \begin{lstlisting}
+def f(x):
+    return x**2
+
+def g(f, N):
+    return [f(i) for i in range(N)]
+    \end{lstlisting}
+    Try \lstinline|f(4)| and \lstinline|g(f, 10)|.
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Functions in scripts}
+
+    Try this script:
+    \begin{lstlisting}
+#!/usr/bin/env python
+
+x = 12.
+print square(x)
+
+def square(y):
+    return y**2
+    \end{lstlisting}
+    Why doesn't it work?
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Using \lstinline|__main__| in scripts}
+
+    The previous script defined \lstinline|square| \textit{after} using it!
+
+    Use \lstinline|__main__| to control script initiation:
+    \begin{lstlisting}
+#!/usr/bin/env python
+
+def main():
+    x = 12.
+    print square(x)
+
+def square(y):
+    return y**2
+
+if __name__ == '__main__':
+    main()
+    \end{lstlisting}
+    What if the \lstinline|__name__| statement were first?
+\end{frame}
+%=============================================================================%
+\section[Objects]{Objects in Python}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Everthing is an object}
+
+    In Python, everything is an \emph{object}: \\
+        integers, strings, lists, functions, etc.
+
+    All objects have a \lstinline|type()|:
+    \begin{lstlisting}
+>>> type(3)
+>>> type([1,2,3])
+>>> type('Hello')
+>>> type(type)
+    \end{lstlisting}
+
+    Variables are just \emph{references} to the objects in memory:
+    \begin{lstlisting}
+>>> x = 3
+>>> type(x)
+>>> x is 3
+    \end{lstlisting}
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Object Methods}
+
+    \lstinline|dir(x)| returns all the contents (i.e. objects) of \lstinline|x|.
+
+    Create a list and look inside:
+    \begin{lstlisting}
+>>> x = range(4)
+>>> dir(x)
+    \end{lstlisting}
+
+    The dot (.) lets you access these contents of an object, e.g.
+    \begin{lstlisting}
+>>> x.append(9)
+>>> x
+[0, 1, 2, 3, 4, 9]
+    \end{lstlisting}
+
+    Use \lstinline|help()| on some of the methods and try them out.\\
+    (Ignore the ones with underscores)
+
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Variables and References}
+
+    There are \textit{immutable} and \textit{mutable} objects.
+
+    Immutable objects cannot be changed: numbers, strings, tuples
+    \begin{lstlisting}
+>>> x = 3   # x points to 3
+>>> y = x   # y points to what x points to
+>>> x = 4   # Now x points to 4
+>>> x
+4
+>>> y
+3
+    \end{lstlisting}
+    The number 3 did not (and cannot) change, so \lstinline|y| still points to 3.
+    \\~\\
+    Do not think that \lstinline|y| 'contains' the value of 3!
+\end{frame}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{Variables and References}
+
+    Now let \lstinline|x| point to a \textit{mutable} list:
+    \begin{lstlisting}
+>>> x = [1,2,3] # [1,2,3] is created
+                # and x points to it
+>>> y = x       # Now y points to the list
+>>> x[0] = 7    # Change part of x
+>>> y           # What is y?
+    \end{lstlisting}
+    
+    NumPy arrays are mutable, and behave similarly.
+\end{frame}
+%=============================================================================%
+\section[Strings]{String Manipulation}
+%-----------------------------------------------------------------------------%
+\begin{frame}[fragile]
+    \frametitle{String Manipulation}
+
+    Strings support a \lstinline|printf|-like syntax:
+    \begin{lstlisting}
+>>> x = 1
+>>> print 'x = %i' % x
+>>> y = 2.0
+>>> print 'x = %i and y = %.2f.' % (x,y)
+    \end{lstlisting}
+
+    There are also several methods to parse and manipulate strings.
+\end{frame}
+%=============================================================================%
+\section[\lstinline|os|]{\texttt{os}: Interface to the OS}
+%-----------------------------------------------------------------------------%
+\frame{
+    \frametitle{\lstinline|os|: Interface to the Operating System}
+
+    \lstinline|import os| provides OS-level commands, e.g.:
+    \begin{itemize}
+        \item \lstinline|os.system(cmd)|\\
+            Run \lstinline|cmd| in the shell (but see \lstinline|subprocess|)
+        \item \lstinline|os.getcwd()|\\
+            Return your current directory
+        \item \lstinline|os.listdir(path)|\\
+            List of all filenames in \lstinline|path|
+        \item \lstinline|os.mkdir(path)|\\
+            Create a directory named \lstinline|path|
+        \item \lstinline|os.remove(path)|\\
+            Delete the file at \lstinline|path|
+        \item \lstinline|os.path.join(path1, path2)|\\
+            Append \lstinline|path2| to \lstinline|path1| as an absolute path
+    \end{itemize}
+    Also: \lstinline|sys|, \lstinline|shutil|, \lstinline|subprocess|
+}
+%=============================================================================%
+\end{document}
